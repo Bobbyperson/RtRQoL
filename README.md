@@ -24,6 +24,14 @@ You can now scroll up through past event messages in the console panel using the
 
 In both the upgrade panel and the new-building description panel, construction requirements are colored green when already satisfied, instead of being red regardless.
 
+### Trade panel shift-click
+
+Shift-clicking the up/down arrows on the trade panel jumps to your current stock of that resource (up) or zero (down), instead of stepping by 1 or 10. Useful for quickly listing everything you have or clearing a trade offer.
+
+### Production vs. pickup prioritization
+
+Workers now pick up output items sitting on the ground before crafting more of the same type. In vanilla, crafting workshops (boweries, smiths, etc.) would keep producing items even when a pile of the same item was already on the ground waiting to be delivered, because the "enough workers" check ignored ground stock entirely for continuous-production settings. Workers now skip refining when in-range ground items of the output type exist, and go pick those up instead.
+
 ## Building from source
 
 Requires Maven and the game installed at its default Steam path.

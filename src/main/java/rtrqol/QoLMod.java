@@ -8,6 +8,8 @@ import rtrqol.patch.ConsoleScrollEntryPatch;
 import rtrqol.patch.ConsoleScrollInputPatch;
 import rtrqol.patch.ConsoleScrollRenderPatch;
 import rtrqol.patch.FindPathPatch;
+import rtrqol.patch.MarketSellMaxPatch;
+import rtrqol.patch.RefineGroundCheckPatch;
 import rtrqol.patch.UnstickPathPatch;
 import rtrqol.patch.UpgradeRequirementsColorPatch;
 
@@ -33,6 +35,9 @@ public class QoLMod implements RtRMod {
         patches.put("rtr/mobs/ai/AIBuildWork", Arrays.<ModPatch>asList(
             new BuildWorkPatch()
         ));
+        patches.put("rtr/mobs/ai/AIRefineResource", Arrays.<ModPatch>asList(
+            new RefineGroundCheckPatch()
+        ));
         patches.put("rtr/console/ConsoleEntry", Arrays.<ModPatch>asList(
             new ConsoleScrollEntryPatch()
         ));
@@ -40,7 +45,8 @@ public class QoLMod implements RtRMod {
             new ConsoleScrollRenderPatch()
         ));
         patches.put("rtr/states/PlayState", Arrays.<ModPatch>asList(
-            new ConsoleScrollInputPatch()
+            new ConsoleScrollInputPatch(),
+            new MarketSellMaxPatch()
         ));
         patches.put("rtr/gui/states/playstate/SelectedObjectUpgradePanel", Arrays.<ModPatch>asList(
             new UpgradeRequirementsColorPatch()

@@ -15,6 +15,11 @@ public class ConsoleScrollEntryPatch implements ModPatch {
 
     @Override
     public void apply(CtClass cc, ClassLoader loader) throws Exception {
+        // Vanilla: ../rtr/rtr/console/ConsoleEntry.java:35-38
+        //   public void decreaseAlpha(float a) {
+        //       this.alphaMax -= a;
+        //       this.alphaCurrent -= a;
+        //   }
         CtMethod m = cc.getDeclaredMethod("decreaseAlpha");
         m.setBody("{}");
     }

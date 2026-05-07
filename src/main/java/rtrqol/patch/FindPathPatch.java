@@ -28,6 +28,8 @@ public class FindPathPatch implements ModPatch {
         CtMethod findPath = cc.getDeclaredMethod("findPath");
 
         // Fix 1: cap pathVariance at 2 (result: 1–3 after the original +1)
+        // Vanilla: ../rtr/rtr/mobs/pathfinder/PathFinder.java:79
+        //   int pathVariance = Utilities.randomInt(100) + 1;
         final boolean[] patchedVariance = {false};
         findPath.instrument(new ExprEditor() {
             @Override
@@ -44,6 +46,17 @@ public class FindPathPatch implements ModPatch {
         // Fix 2: on the first setParent call in findPath (the one inside the isOpen()
         // branch), also update g/f and re-insert into the priority queue.
         // The second setParent call (in the else/new-node branch) is left untouched.
+        // Vanilla: ../rtr/rtr/mobs/pathfinder/PathFinder.java:131-141
+        //   if (checkNode.isOpen()) {
+        //       int gValueCheck = this.basePathNode.getG() + movementCost;
+        //       if (gValueCheck < checkNode.getG()) {
+        //           checkNode.setParent(this.basePathNode);  // ← patched (line 134): g/f not updated, node not re-inserted
+        //       }
+        //   } else {
+        //       checkNode.setParent(this.basePathNode);      // ← untouched (line 138)
+        //       ...
+        //       this.openPathNodes.add(checkNode);           // line 141
+        //   }
         final int[] setParentCount = {0};
         findPath.instrument(new ExprEditor() {
             @Override

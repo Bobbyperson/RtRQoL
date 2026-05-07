@@ -17,6 +17,9 @@ public class ConsoleScrollInputPatch implements ModPatch {
 
     @Override
     public void apply(CtClass cc, ClassLoader loader) throws Exception {
+        // Vanilla: ../rtr/rtr/states/PlayState.java:4230
+        //   public void mouseWheelMoved(int change) { ... }
+        // Code is inserted before the existing method body.
         CtMethod m = cc.getDeclaredMethod("mouseWheelMoved");
         m.insertBefore("{"
             + "if (!transition.getControlLockout() && !loadingRequired && !gamePaused && !map.isMapLost()) {"

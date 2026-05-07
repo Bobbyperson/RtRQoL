@@ -58,21 +58,23 @@ public class UpgradeRequirementsColorPatch implements ModPatch {
             public void edit(MethodCall m) throws CannotCompileException {
                 if (!"drawString".equals(m.getMethodName())) return;
 
-                if (m.getLineNumber() == 134) {
+                // Line numbers below are bytecode (LineNumberTable) values, not decompiled source lines.
+                // ../rtr/rtr/gui/states/playstate/SelectedObjectUpgradePanel.java (decompiled lines in parens)
+                if (m.getLineNumber() == 134) { // decompiled line 156: drawString for "Requires X for Y"
                     // "Requires X for Y" green if the refining building is built
                     m.replace(
                         "{ String _t = qolHasRefiningBuilding(type)" +
                         "    ? $3.replace(\"$RED1\", \"$GRE1\") : $3;" +
                         "  $0.drawString($1, $2, _t, $4, $5); }"
                     );
-                } else if (m.getLineNumber() == 146) {
+                } else if (m.getLineNumber() == 146) { // decompiled line 173: drawString for "$RED1" + valueDifference + ...
                     // Resource amount green if player has enough
                     m.replace(
                         "{ String _c = this.resource.getResourceTotal(type, false) >= valueDifference" +
                         "    ? \"$GRE1\" : \"$RED1\";" +
                         "  $0.drawString($1, $2, $3.replace(\"$RED1\", _c), $4, $5); }"
                     );
-                } else if (m.getLineNumber() == 192) {
+                } else if (m.getLineNumber() == 192) { // decompiled line 209: drawString for support building (String)out
                     // Required support building green if any building in group is built
                     m.replace(
                         "{ String _t = qolHasSupportBuilding(a)" +

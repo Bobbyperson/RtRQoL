@@ -29,6 +29,9 @@ public class UnstickPathPatch implements ModPatch {
     public void apply(CtClass cc, ClassLoader loader) throws Exception {
         CtMethod findUnstickPath = cc.getDeclaredMethod("findUnstickPath");
 
+        // Vanilla: ../rtr/rtr/mobs/pathfinder/PathFinder.java:201
+        //   if (blockMap[checkX][checkY] == 0
+        //           && this.getCoordinatesInRangeMultithreaded(checkX, checkY, 16, false, g).size() > 16) {
         findUnstickPath.instrument(new ExprEditor() {
             @Override
             public void edit(MethodCall m) throws CannotCompileException {

@@ -1,4 +1,5 @@
 target/
-RtRModLoader-*.jar
+RtRModLoader*.jar
 logs/
 Core.jar
+launch-modloader.sh

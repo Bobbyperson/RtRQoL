@@ -6,7 +6,7 @@
 
     <groupId>rtrqol</groupId>
     <artifactId>RtRQoL</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>jar</packaging>
 
     <properties>
@@ -30,9 +30,9 @@
         <dependency>
             <groupId>rtrmodloader</groupId>
             <artifactId>RtRModLoader</artifactId>
-            <version>0.1</version>
+            <version>0.2</version>
             <scope>system</scope>
-            <systemPath>${rtr.home}/RtRModLoader-0.1.jar</systemPath>
+            <systemPath>${rtr.home}/RtRModLoader.jar</systemPath>
         </dependency>
 
         <!-- Javassist - compile only, bundled inside the modloader fat JAR at runtime -->
@@ -50,6 +50,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.3.0</version>
+                <configuration>
+                    <finalName>RtRQoL</finalName>
+                </configuration>
             </plugin>
         </plugins>
     </build>

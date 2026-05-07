@@ -23,6 +23,8 @@ public class ConsoleScrollRenderPatch implements ModPatch {
     public void apply(CtClass cc, ClassLoader loader) throws Exception {
         // Intercept the consoleMaxLength read in update() and return 100 instead,
         // allowing the console to retain up to 101 messages of history.
+        // Vanilla: ../rtr/rtr/console/Console.java:16 — private static int consoleMaxLength = 11;
+        //          ../rtr/rtr/console/Console.java:26 — if (consoleDisplay.size() > consoleMaxLength + 1)
         CtMethod update = cc.getDeclaredMethod("update");
         update.instrument(new ExprEditor() {
             @Override
@@ -35,6 +37,16 @@ public class ConsoleScrollRenderPatch implements ModPatch {
 
         // Rewrite renderConsole(Graphics g, int x, int y, int count) to shift the
         // displayed window by a scroll offset stored in System.getProperties().
+        // Vanilla: ../rtr/rtr/console/Console.java:53-61
+        //   public static void renderConsole(Graphics g, int x, int y, int length) {
+        //       int i = length;
+        //       while (i > 0) {
+        //           if (consoleDisplay.size() > i) {
+        //               consoleDisplay.get(consoleDisplay.size() - i).render(x + 6, y - i * 12 - 3);
+        //           }
+        //           --i;
+        //       }
+        //   }
         CtMethod m = cc.getDeclaredMethod("renderConsole");
         m.setBody("{"
             + "int _off = 0;"

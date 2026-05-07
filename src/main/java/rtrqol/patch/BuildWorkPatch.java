@@ -22,6 +22,11 @@ public class BuildWorkPatch implements ModPatch {
 
     @Override
     public void apply(CtClass cc, ClassLoader loader) throws Exception {
+        // Vanilla: ../rtr/rtr/mobs/ai/AIBuildWork.java:440-478
+        // Full method replaced. Key bug at line 477:
+        //   return workerCount > 6
+        //       || workerCountOnSite > totalResourcesNeededLeft   // ← should be workerCount
+        //       || workerCountOnSite > totalResourcesAvailable;   // ← should be workerCount
         CtMethod m = cc.getDeclaredMethod("workerCountTooHigh");
         m.setBody("{"
             + "java.util.ArrayList mobArray = this.mob.getMobsByAssignment("
